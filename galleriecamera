@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Photo Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    figure {
+      background: #fff;
+      padding: 10px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: border 0.3s, transform 0.3s;
+      outline: none;
+    }
+    figure:focus {
+      border: 2px solid #007BFF;
+      transform: scale(1.05);
+    }
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+    figcaption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Accessible Photo Gallery</h1>
+
+  <main class="gallery">
+    <figure>
+      <img src="photo1.jpg" alt="Sunset over mountains">
+      <figcaption>Sunset over mountains</figcaption>
+    </figure>
+    <figure>
+      <img src="photo2.jpg" alt="Forest trail in autumn">
+      <figcaption>Forest trail in autumn</figcaption>
+    </figure>
+    <figure>
+      <img src="photo3.jpg" alt="City skyline at night">
+      <figcaption>City skyline at night</figcaption>
+    </figure>
+    <!-- Add more figures as needed -->
+  </main>
+
+  <script>
+    // Select all figures
+    const figures = document.querySelectorAll('figure');
+
+    // Add tabindex dynamically for keyboard navigation
+    figures.forEach((fig, index) => {
+      fig.setAttribute('tabindex', index + 1);
+
+      // Mouse events: highlight on hover
+      fig.addEventListener('mouseover', () => {
+        fig.style.border = '2px solid #007BFF';
+      });
+      fig.addEventListener('mouseout', () => {
+        fig.style.border = '';
+      });
+
+      // Keyboard events: highlight on focus
+      fig.addEventListener('focus', () => {
+        fig.style.border = '2px solid #007BFF';
+      });
+      fig.addEventListener('blur', () => {
+        fig.style.border = '';
+      });
+
+      // Click event: example alert (can replace with modal/gallery popup)
+      fig.addEventListener('click', () => {
+        alert(fig.querySelector('figcaption').textContent);
+      });
+    });
+
+    // Page load event
+    window.addEventListener('load', () => {
+      console.log('Gallery loaded successfully!');
+    });
+
+    // Window resize event
+    window.addEventListener('resize', () => {
+      console.log('Window resized. Adjust layout if needed.');
+    });
+
+    // Keyboard event example
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        figures[0].focus(); // Example: focus the first figure
+      }
+    });
+  </script>
+
+</body>
+</html>
