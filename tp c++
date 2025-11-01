@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# File: guessinggame.sh
+# Guessing game: user guesses number of files in current directory
+
+# Function to count files
+count_files() {
+    echo $(ls -1 | wc -l)
+}
+
+# Function to prompt the user
+prompt_guess() {
+    echo -n "Guess how many files are in the current directory: "
+    read guess
+}
+
+# Main game loop
+echo "Welcome to the guessing game!"
+
+num_files=$(count_files)
+
+while true; do
+    prompt_guess
+    if [[ ! "$guess" =~ ^[0-9]+$ ]]; then
+        echo "Please enter a valid number."
+        continue
+    fi
+
+    if [[ $guess -lt $num_files ]]; then
+        echo "Your guess is too low. Try again."
+    elif [[ $guess -gt $num_files ]]; then
+        echo "Your guess is too high. Try again."
+    else
+        echo "Congratulations! You guessed correctly."
+        break
+    fi
+done
